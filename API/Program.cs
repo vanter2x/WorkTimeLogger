@@ -1,3 +1,5 @@
+using Application.Users;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence;
@@ -32,6 +34,11 @@ builder.Services.AddDbContext<DataContext>(opt =>
 
 builder.Services.AddScoped<IDataGenerator, DataGenerator>();
 builder.Services.AddScoped<Seeder>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddMediatR(typeof(UserList.Handler));
+
+
 
 var app = builder.Build();
 
