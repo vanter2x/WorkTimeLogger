@@ -1,7 +1,6 @@
 ﻿using Application.Users;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Persistence;
 
 namespace API.Controllers
 {

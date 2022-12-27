@@ -2,7 +2,7 @@
 using Persistence;
 
 namespace Application.Users
-{ 
+{
     public static class DeleteUser
     {
         public class Command : IRequest

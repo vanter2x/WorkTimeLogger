@@ -1,10 +1,5 @@
 ﻿using Bogus;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.DataSeeding
 {
@@ -39,7 +34,7 @@ namespace Persistence.DataSeeding
                 .RuleFor(a => a.LastName, f => f.Name.LastName())
                 .RuleFor(a => a.Email, f => f.Internet.Email())
                 .RuleFor(a => a.Phone, f => f.Phone.PhoneNumber());
-            
+
 
             var clients = clientGenerator.Generate(20);
 
