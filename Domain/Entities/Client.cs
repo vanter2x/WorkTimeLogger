@@ -1,4 +1,4 @@
-﻿namespace WorkTimeLogger.Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Client
     {

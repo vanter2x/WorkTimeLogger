@@ -1,4 +1,4 @@
-﻿using WorkTimeLogger.Domain.Entities;
+﻿using Domain.Entities;
 
 namespace Persistence.DataSeeding
 {

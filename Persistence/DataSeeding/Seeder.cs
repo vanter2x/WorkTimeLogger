@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.DataSeeding
 {
-    public class Seeder
+    public sealed class Seeder
     {
         private readonly DataContext _context;
         private readonly IDataGenerator _dataGenerator;
@@ -24,14 +24,14 @@ namespace Persistence.DataSeeding
             {
                 throw new Exception();
             }
-
+            
             var pendingMigrations = _context.Database.GetPendingMigrations();
 
             if (pendingMigrations != null && pendingMigrations.Any())
             {
                 _context.Database.Migrate();
             }
-
+            
             if (!_context.Roles.Any())
             {
                 var roles = _dataGenerator.GetRoles();
