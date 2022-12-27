@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Persistence;
+using Persistence.DataSeeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +25,22 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddDbContext<DataContext>(opt =>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddScoped<IDataGenerator, DataGenerator>();
+builder.Services.AddScoped<Seeder>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<Seeder>();
+
+seeder.SeedData();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
