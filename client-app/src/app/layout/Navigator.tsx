@@ -17,15 +17,14 @@ const categories = [
     id: 'Menu',
     children: [
       {
-        id: 'Users',
+        id: 0,
         text: 'Użytkownicy',
         icon: <PeopleIcon />,
-        active: true,
       },
-      { id: 'Clients', text: 'Klienci', icon: <DnsRoundedIcon /> },
-      { id: 'WorkPlaces', text: 'Miejsca', icon: <PermMediaOutlinedIcon /> },
-      { id: 'Jobs', text: 'Prace', icon: <PublicIcon /> },
-      { id: 'JobDay', text: 'Dzień pracy', icon: <SettingsEthernetIcon /> }
+      { id: 1, text: 'Klienci', icon: <DnsRoundedIcon /> },
+      { id: 2, text: 'Miejsca', icon: <PermMediaOutlinedIcon /> },
+      { id: 3, text: 'Prace', icon: <PublicIcon /> },
+      { id: 4, text: 'Dzień pracy', icon: <SettingsEthernetIcon /> }
     ],
   },
 
@@ -45,8 +44,12 @@ const itemCategory = {
   py: 1.5,
   px: 3,
 };
+interface Props extends DrawerProps {
+  items: string;
+  onItemClick: (nr: Number) => void;
+}
 
-export default function Navigator(props: DrawerProps) {
+export default function Navigator(props: Props) {
   const { ...other } = props;
 
   return (
@@ -60,9 +63,9 @@ export default function Navigator(props: DrawerProps) {
             <ListItem sx={{ py: 2, px: 3 }}>
               <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
             </ListItem>
-            {children.map(({ id: childId, text, icon, active }) => (
-              <ListItem disablePadding key={childId}>
-                <ListItemButton selected={active} sx={item}>
+            {children.map(({ id: childId, text, icon }) => (
+              <ListItem disablePadding key={childId} onClick={() => props.onItemClick(childId)}>
+                <ListItemButton selected={props.items === id ? true : false} sx={item}>
                   <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText>{text}</ListItemText>
                 </ListItemButton>

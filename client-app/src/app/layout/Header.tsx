@@ -13,9 +13,11 @@ const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 interface HeaderProps {
   onDrawerToggle: () => void;
+  tabIndex: Number;
+  onTabClick: (nr: Number) => void;
 }
 
-export default function Header(props: HeaderProps) {
+export default function Header({ onDrawerToggle, tabIndex, onTabClick }: HeaderProps) {
   const activeId = "Użytkownicy";
 
   return (
@@ -53,12 +55,12 @@ export default function Header(props: HeaderProps) {
         </Toolbar>
       </AppBar>
       <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
-        <Tabs value={0} textColor="inherit">
-          <Tab label="Użytkownicy" />
-          <Tab label="Klienci" />
-          <Tab label="Miejsca" />
-          <Tab label="Prace" />
-          <Tab label="Dzień pracy" />
+        <Tabs value={tabIndex} textColor="inherit">
+          <Tab label="Użytkownicy" onClick={() => onTabClick(0)} />
+          <Tab label="Klienci" onClick={() => onTabClick(1)} />
+          <Tab label="Miejsca" onClick={() => onTabClick(2)} />
+          <Tab label="Prace" onClick={() => onTabClick(3)} />
+          <Tab label="Dzień pracy" onClick={() => onTabClick(4)} />
         </Tabs>
       </AppBar>
     </React.Fragment>

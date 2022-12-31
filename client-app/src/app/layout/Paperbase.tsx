@@ -170,9 +170,14 @@ interface Props {
 export default function Paperbase({ users }: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const [selectedId, setSelectedId] = React.useState<Number>(0);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleSelectedId = (nr: Number) => {
+    setSelectedId(nr);
   };
 
   return (
@@ -189,15 +194,19 @@ export default function Paperbase({ users }: Props) {
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
+              items={selectedId.toString()}
+              onItemClick={handleSelectedId}
             />
           )}
           <Navigator
             PaperProps={{ style: { width: drawerWidth } }}
             sx={{ display: { sm: 'block', xs: 'none' } }}
+            items={selectedId.toString()}
+            onItemClick={handleSelectedId}
           />
         </Box>
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <Header onDrawerToggle={handleDrawerToggle} />
+          <Header onDrawerToggle={handleDrawerToggle} tabIndex={selectedId} onTabClick={handleSelectedId} />
           <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
             <Content users={users} />
           </Box>
