@@ -41,7 +41,7 @@ export default function Header(props: HeaderProps) {
                 color="inherit"
                 size="small"
               >
-                Web setup
+                Wyloguj
               </Button>
             </Grid>
             <Grid item>

@@ -14,6 +14,7 @@ function App() {
       .then((response) => {
         setUsers(response.data);
       })
+    console.log(users);
   }, [])
 
   return (
