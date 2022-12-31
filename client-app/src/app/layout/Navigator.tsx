@@ -65,7 +65,7 @@ export default function Navigator(props: Props) {
             </ListItem>
             {children.map(({ id: childId, text, icon }) => (
               <ListItem disablePadding key={childId} onClick={() => props.onItemClick(childId)}>
-                <ListItemButton selected={props.items === id ? true : false} sx={item}>
+                <ListItemButton selected={props.items === childId.toString() ? true : false} sx={item}>
                   <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText>{text}</ListItemText>
                 </ListItemButton>
