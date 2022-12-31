@@ -11,8 +11,13 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import DataList from '../../components/DataList';
+import { User } from '../models/user';
 
-export default function Content() {
+interface Props {
+  users: User[];
+}
+
+export default function Content({ users }: Props) {
   return (
     <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
       <AppBar
@@ -50,7 +55,7 @@ export default function Content() {
           </Grid>
         </Toolbar>
       </AppBar>
-      <DataList />
+      <DataList users={users} />
       {/* <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
         No users for this project yet
       </Typography> */}
