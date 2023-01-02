@@ -1,7 +1,8 @@
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { User } from "../app/models/user";
+import requestAgent from "../../app/api/requestAgent";
+import { User } from "../../app/models/user";
 
 const columns: GridColDef[] = [
   {
@@ -40,17 +41,22 @@ const createRandomRow = (user: any) => {
     email: user.email,
   };
 };
-interface Props {
-  users: User[];
-}
 
-export default function DataList({ users }: Props) {
+export default function UserList() {
   const [rows, setRows] = useState<GridRowsProp>([]);
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    requestAgent.Users.list()
+      .then((response) => {
+        setUsers(response);
+      }).catch((error) => { console.log(error); });
+  }, []);
 
   useEffect(() => {
     setRows([]);
     users.map((user) => setRows((rows) => [...rows, createRandomRow(user)]));
-  }, [users]);
+  }, [users])
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>

@@ -163,11 +163,7 @@ theme = {
 
 const drawerWidth = 256;
 
-interface Props {
-  users: User[];
-}
-
-export default function Paperbase({ users }: Props) {
+export default function Paperbase() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const [selectedId, setSelectedId] = React.useState<Number>(0);
@@ -194,13 +190,14 @@ export default function Paperbase({ users }: Props) {
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
-              items={selectedId.toString()}
               onItemClick={handleSelectedId}
+              items={selectedId.toString()}
             />
           )}
           <Navigator
             PaperProps={{ style: { width: drawerWidth } }}
             sx={{ display: { sm: 'block', xs: 'none' } }}
+
             items={selectedId.toString()}
             onItemClick={handleSelectedId}
           />
@@ -208,7 +205,7 @@ export default function Paperbase({ users }: Props) {
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Header onDrawerToggle={handleDrawerToggle} tabIndex={selectedId} onTabClick={handleSelectedId} />
           <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
-            <Content users={users} />
+            <Content />
           </Box>
           <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
             <Copyright />
