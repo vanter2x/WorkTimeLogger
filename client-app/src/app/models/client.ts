@@ -1,9 +1,9 @@
-export interface User{
+export interface Client{
     id: string;
     firstName: string;
     lastName: number;
     phone: string;
     email: string;
-    roleId: Number
+    workPlace: any;
 }
 export{}

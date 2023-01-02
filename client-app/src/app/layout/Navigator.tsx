@@ -27,7 +27,6 @@ const categories = [
       { id: 4, text: 'Dzień pracy', icon: <SettingsEthernetIcon /> }
     ],
   },
-
 ];
 
 const item = {
@@ -44,6 +43,7 @@ const itemCategory = {
   py: 1.5,
   px: 3,
 };
+
 interface Props extends DrawerProps {
   items: string;
   onItemClick: (nr: Number) => void;
