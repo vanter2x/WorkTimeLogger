@@ -8,10 +8,13 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { User } from '../models/user';
-import UserList from '../../components/user/UserList';
+import ContentList from '../../components/shared/ContentList';
 
-export default function Content() {
+interface Props {
+  selectedMenuId: Number
+}
+
+export default function Content({ selectedMenuId }: Props) {
   return (
     <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
       <AppBar
@@ -49,7 +52,7 @@ export default function Content() {
           </Grid>
         </Toolbar>
       </AppBar>
-      <UserList />
+      <ContentList listId={selectedMenuId} />
     </Paper>
   );
 }
