@@ -40,7 +40,7 @@ export default function Content({ selectedMenuId }: Props) {
               />
             </Grid>
             <Grid item>
-              <Button variant="contained" sx={{ mr: 1 }}>
+              <Button id="user" variant="contained" sx={{ mr: 1 }}>
                 Add user
               </Button>
               <Tooltip title="Reload">
