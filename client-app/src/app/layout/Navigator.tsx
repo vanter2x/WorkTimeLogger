@@ -7,10 +7,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import PeopleIcon from '@mui/icons-material/People';
-import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual';
 import PublicIcon from '@mui/icons-material/Public';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
+import RecentActors from '@mui/icons-material/RecentActors';
+import { HomeRepairService, WorkHistory } from '@mui/icons-material';
 
 const categories = [
   {
@@ -21,10 +20,10 @@ const categories = [
         text: 'Użytkownicy',
         icon: <PeopleIcon />,
       },
-      { id: 1, text: 'Klienci', icon: <DnsRoundedIcon /> },
-      { id: 2, text: 'Miejsca', icon: <PermMediaOutlinedIcon /> },
-      { id: 3, text: 'Prace', icon: <PublicIcon /> },
-      { id: 4, text: 'Dzień pracy', icon: <SettingsEthernetIcon /> }
+      { id: 1, text: 'Klienci', icon: <RecentActors /> },
+      { id: 2, text: 'Miejsca', icon: <PublicIcon /> },
+      { id: 3, text: 'Prace', icon: <HomeRepairService /> },
+      { id: 4, text: 'Dzień pracy', icon: <WorkHistory /> }
     ],
   },
 ];
@@ -43,6 +42,8 @@ const itemCategory = {
   py: 1.5,
   px: 3,
 };
+
+
 
 interface Props extends DrawerProps {
   items: string;

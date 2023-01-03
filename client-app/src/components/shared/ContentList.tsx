@@ -1,4 +1,5 @@
 import ClientList from "../client/ClientList";
+import AddUserForm from "../user/AddUserForm";
 import UserList from "../user/UserList";
 
 
@@ -18,7 +19,7 @@ export default function ContentList({ listId }: Props) {
             )
         default:
             return (
-                <p>Brak rekordów</p>
+                <AddUserForm />
             )
     }
 }
