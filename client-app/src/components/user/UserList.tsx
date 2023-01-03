@@ -3,6 +3,7 @@ import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import requestAgent from "../../app/api/requestAgent";
 import { User } from "../../app/models/user";
+import LoadingComponent from "../shared/LoadingConponent";
 
 const columns: GridColDef[] = [
   {
@@ -45,18 +46,22 @@ const createRandomRow = (user: any) => {
 export default function UserList() {
   const [rows, setRows] = useState<GridRowsProp>([]);
   const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     requestAgent.Users.list()
       .then((response) => {
         setUsers(response);
-      }).catch((error) => { console.log(error); });
+        setLoading(false);
+      })
   }, []);
 
   useEffect(() => {
     setRows([]);
     users.map((user) => setRows((rows) => [...rows, createRandomRow(user)]));
   }, [users])
+
+  if (loading) return <LoadingComponent />
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
