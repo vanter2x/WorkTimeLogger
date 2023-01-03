@@ -22,7 +22,7 @@ axios.interceptors.response.use(async response => {
 
 const responseBody =<T>(response : AxiosResponse <T>) => response.data;
 
-const request = {
+const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) => axios.post<T>(url,body).then(responseBody),
     put: <T>(url: string, body: {}) => axios.put<T>(url,body).then(responseBody),
@@ -30,10 +30,18 @@ const request = {
 }
 
 const Users = {
-    list: () => request.get<User[]>('/user')
+    list: () => requests.get<User[]>('/user'),
+    details: (id: string) => requests.get<User>(`/user/${id}`),
+    create: (user: User) => requests.post<void>('/user',user),
+    update: (user: User) => requests.put<void>('/user', user),
+    delete: (id: string) => requests.del<void>(`/user/${id}`)
 }
 const Clients = {
-    list: () => request.get<Client[]>('/client')
+    list: () => requests.get<Client[]>('/client'),
+    details: (id: string) => requests.get<Client>(`/client/${id}`),
+    create: (client: Client) => requests.post<void>('/client',client),
+    update: (client: Client) => requests.put<void>('/client', client),
+    delete: (id: string) => requests.del<void>(`/client/${id}`)
 }
 const requestAgent = {
     Users,

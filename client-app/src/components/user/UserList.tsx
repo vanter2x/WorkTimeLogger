@@ -70,7 +70,7 @@ export default function UserList() {
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
-        checkboxSelection
+        checkboxSelection={false}
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
       />
