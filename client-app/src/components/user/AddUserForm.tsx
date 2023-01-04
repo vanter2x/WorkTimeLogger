@@ -52,7 +52,7 @@ export default function AddUserForm() {
                                 <TextField label="Powtórz hasło" type={'password'} placeholder="Podaj hasło" variant="outlined" fullWidth required />
                             </Grid>
                             <Grid item xs={12}>
-                                <Button type="submit" variant="contained" color="primary" fullWidth>Submit</Button>
+                                <Button type="submit" variant="contained" color="primary" fullWidth>Zapisz</Button>
                             </Grid>
                         </Grid>
                     </form>

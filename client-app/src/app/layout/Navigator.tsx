@@ -45,13 +45,13 @@ const itemCategory = {
 
 
 
-interface Props extends DrawerProps {
+interface Props {
   items: string;
-  onItemClick: (nr: number) => void;
+  itemClick: (nr: number) => void;
 }
 
-export default function Navigator(props: Props) {
-  const { ...other } = props;
+export default function Navigator(props: DrawerProps & Props) {
+  const { itemClick, items, ...other } = props;
 
   return (
     <Drawer variant="permanent" {...other}>
@@ -65,7 +65,7 @@ export default function Navigator(props: Props) {
               <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
             </ListItem>
             {children.map(({ id: childId, text, icon }) => (
-              <ListItem disablePadding key={childId} onClick={() => props.onItemClick(childId)}>
+              <ListItem disablePadding key={childId} onClick={() => props.itemClick(childId)}>
                 <ListItemButton selected={props.items === childId.toString() ? true : false} sx={item}>
                   <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText>{text}</ListItemText>
