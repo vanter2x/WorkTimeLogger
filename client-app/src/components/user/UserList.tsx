@@ -47,6 +47,7 @@ export default function UserList() {
   const [rows, setRows] = useState<GridRowsProp>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedRow, setSelectedRow] = useState<any>(null);
 
   useEffect(() => {
     requestAgent.Users.list()
@@ -70,9 +71,15 @@ export default function UserList() {
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
-        checkboxSelection={false}
-        disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
+        onSelectionModelChange={(ids) => {
+          const selectedIDs = new Set(ids);
+          const selectedRows = rows.filter((row) =>
+            selectedIDs.has(row.id),
+          );
+          setSelectedRow(selectedRows);
+          console.log(selectedRow);
+        }}
       />
     </Box>
   );

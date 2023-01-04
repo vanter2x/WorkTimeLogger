@@ -13,8 +13,8 @@ const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 interface HeaderProps {
   onDrawerToggle: () => void;
-  tabIndex: Number;
-  onTabClick: (nr: Number) => void;
+  tabIndex: number;
+  onTabClick: (nr: number) => void;
 }
 
 export default function Header({ onDrawerToggle, tabIndex, onTabClick }: HeaderProps) {

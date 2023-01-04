@@ -24,6 +24,11 @@ let theme = createTheme({
       main: '#1976d2',
       dark: '#006db3',
     },
+    secondary: {
+      light: '#1976d2',
+      main: '#1976d2',
+      dark: '#006db3',
+    }
   },
   typography: {
     h5: {
@@ -165,13 +170,13 @@ const drawerWidth = 256;
 export default function Paperbase() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
-  const [selectedId, setSelectedId] = React.useState<Number>(0);
+  const [selectedId, setSelectedId] = React.useState<number>(0);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleSelectedId = (nr: Number) => {
+  const handleSelectedId = (nr: number) => {
     setSelectedId(nr);
   };
 

@@ -47,7 +47,7 @@ const itemCategory = {
 
 interface Props extends DrawerProps {
   items: string;
-  onItemClick: (nr: Number) => void;
+  onItemClick: (nr: number) => void;
 }
 
 export default function Navigator(props: Props) {
