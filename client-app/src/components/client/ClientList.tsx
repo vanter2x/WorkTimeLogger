@@ -47,6 +47,7 @@ export default function ClientList() {
     const [clients, setClients] = useState<Client[]>([]);
     const [rows, setRows] = useState<GridRowsProp>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedRows, setSelectedRows] = useState<any>(null);
 
     useEffect(() => {
         requestAgent.Clients.list()
@@ -70,9 +71,15 @@ export default function ClientList() {
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
-                checkboxSelection
-                disableSelectionOnClick
                 experimentalFeatures={{ newEditingApi: true }}
+                onSelectionModelChange={(ids) => {
+                    const selectedIDs = new Set(ids);
+                    const selectedRows = rows.filter((row) =>
+                        selectedIDs.has(row.id),
+                    );
+                    setSelectedRows(selectedRows);
+                    console.log(selectedRows);
+                }}
             />
         </Box>
     );

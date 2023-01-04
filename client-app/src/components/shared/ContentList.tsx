@@ -4,7 +4,7 @@ import UserList from "../user/UserList";
 
 
 interface Props {
-    listId: Number
+    listId: number
 }
 
 export default function ContentList({ listId }: Props) {

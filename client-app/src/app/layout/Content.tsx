@@ -9,15 +9,17 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import ContentList from '../../components/shared/ContentList';
+import ContentAppBar from '../../components/shared/ContentAppBar';
 
 interface Props {
-  selectedMenuId: Number
+  selectedMenuId: number
 }
 
 export default function Content({ selectedMenuId }: Props) {
   return (
-    <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
-      <AppBar
+    <Paper sx={{ maxWidth: 1002, margin: 'auto', overflow: 'hidden' }}>
+      <ContentAppBar />
+      {/* <AppBar
         position="static"
         color="default"
         elevation={0}
@@ -51,7 +53,7 @@ export default function Content({ selectedMenuId }: Props) {
             </Grid>
           </Grid>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <ContentList listId={selectedMenuId} />
     </Paper>
   );

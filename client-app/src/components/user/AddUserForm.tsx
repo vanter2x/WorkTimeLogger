@@ -31,12 +31,12 @@ export default function AddUserForm() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    id="outlined-select-currency"
+                                    id="select-role"
                                     select
                                     required
                                     fullWidth
                                     label="Typ konta"
-                                    defaultValue="EUR"
+                                    defaultValue="Pracownik"
                                 >
                                     {roles.map((option) => (
                                         <MenuItem key={option.id} value={option.text}>
