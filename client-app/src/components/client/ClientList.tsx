@@ -62,7 +62,13 @@ export default function ClientList() {
         clients.map((client) => setRows((rows) => [...rows, createRandomRow(client)]));
     }, [clients])
 
-    if (loading) return <LoadingComponent />
+    if (loading) {
+        return (
+            <Box sx={{ height: 400, width: "100%" }}>
+                <LoadingComponent />
+            </Box>
+        )
+    }
 
     return (
         <Box sx={{ height: 400, width: "100%" }}>
@@ -74,10 +80,10 @@ export default function ClientList() {
                 experimentalFeatures={{ newEditingApi: true }}
                 onSelectionModelChange={(ids) => {
                     const selectedIDs = new Set(ids);
-                    const selectedRows = rows.filter((row) =>
+                    const selectedRow = rows.filter((row) =>
                         selectedIDs.has(row.id),
                     );
-                    setSelectedRows(selectedRows);
+                    setSelectedRows(selectedRow);
                     console.log(selectedRows);
                 }}
             />

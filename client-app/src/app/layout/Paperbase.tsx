@@ -25,9 +25,9 @@ let theme = createTheme({
       dark: '#006db3',
     },
     secondary: {
-      light: '#1976d2',
-      main: '#1976d2',
-      dark: '#006db3',
+      light: '#00e5ff',
+      main: '#2979ff',
+      dark: '#00a0b2',
     }
   },
   typography: {
@@ -194,7 +194,7 @@ export default function Paperbase() {
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
-              onItemClick={handleSelectedId}
+              itemClick={() => handleSelectedId(selectedId)}
               items={selectedId.toString()}
             />
           )}
@@ -203,7 +203,7 @@ export default function Paperbase() {
             sx={{ display: { sm: 'block', xs: 'none' } }}
 
             items={selectedId.toString()}
-            onItemClick={handleSelectedId}
+            itemClick={handleSelectedId}
           />
         </Box>
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
