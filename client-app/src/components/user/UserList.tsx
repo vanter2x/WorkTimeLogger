@@ -43,11 +43,15 @@ const createRandomRow = (user: any) => {
   };
 };
 
-export default function UserList() {
+interface Props {
+  selectedUser: (user: User) => void;
+}
+
+export default function UserList({ selectedUser }: Props) {
   const [rows, setRows] = useState<GridRowsProp>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedRow, setSelectedRow] = useState<any>(null);
+
 
   useEffect(() => {
     requestAgent.Users.list()
@@ -74,11 +78,12 @@ export default function UserList() {
         experimentalFeatures={{ newEditingApi: true }}
         onSelectionModelChange={(ids) => {
           const selectedIDs = new Set(ids);
-          const selectedRows = rows.filter((row) =>
-            selectedIDs.has(row.id),
+          const userSelect = users.filter((user) =>
+            selectedIDs.has(user.id)
           );
-          setSelectedRow(selectedRows);
-          console.log(selectedRow);
+
+          selectedUser(userSelect[0]);
+          console.log(userSelect[0]); //do usunięcia!!!!!!!!!!!!!!!!!!!!!!!!
         }}
       />
     </Box>
