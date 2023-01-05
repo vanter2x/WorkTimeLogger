@@ -2,12 +2,17 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import { User } from '../../app/models/user';
 
 interface Props {
     selectedId: number
+    userSelect: User | null;
+    newUserHandler: (isNewUser: boolean) => void;
 }
 
-export default function ContentAppBar({ selectedId }: Props) {
+
+
+export default function ContentAppBar({ selectedId, userSelect, newUserHandler }: Props) {
     return (
         <AppBar
             position="static"
@@ -20,14 +25,14 @@ export default function ContentAppBar({ selectedId }: Props) {
                     <Grid item xs>
                     </Grid>
                     <Grid item>
-                        <Button id="user" variant="contained" color='secondary' sx={{ mr: 1 }}>
-                            Dodaj użytkownika
+                        <Button onClick={() => newUserHandler(true)} id="adduser" variant="contained" color='secondary' sx={{ mr: 1 }}>
+                            Dodaj {selectedId === 0 ? 'uzytkownika' : 'clienta'}
                         </Button>
-                        <Button id="user" variant="contained" color='secondary' sx={{ mr: 1 }}>
-                            Edytuj użytkownika
+                        <Button id="edituser" variant="contained" color='secondary' sx={{ mr: 1 }}>
+                            Edytuj {selectedId === 0 ? 'uzytkownika' : 'clienta'}
                         </Button>
-                        <Button id="user" variant="contained" color='secondary' sx={{ mr: 1 }}>
-                            Usuń użytkownika
+                        <Button id="deleteuser" variant="contained" color='secondary' sx={{ mr: 1 }}>
+                            Usuń {selectedId === 0 ? 'uzytkownika' : 'clienta'}
                         </Button>
                     </Grid>
                 </Grid>
