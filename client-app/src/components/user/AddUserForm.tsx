@@ -61,6 +61,9 @@ export default function AddUserForm({ isNewUser, editUser, formUserState }: Prop
                             <Grid item xs={12}>
                                 <Button onClick={() => isNewUser(false)} type="submit" variant="contained" color="primary" fullWidth>Zapisz</Button>
                             </Grid>
+                            <Grid item xs={12}>
+                                <Button onClick={() => isNewUser(false)} variant="outlined" color="primary" >Anuluj</Button>
+                            </Grid>
                         </Grid>
                     </form>
                 </CardContent>

@@ -1,5 +1,6 @@
+import { Button, ButtonGroup } from "@mui/material";
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowParams, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import requestAgent from "../../app/api/requestAgent";
 import { User } from "../../app/models/user";
@@ -28,9 +29,20 @@ const columns: GridColDef[] = [
     field: "email",
     headerName: "Email",
     sortable: false,
-    width: 160,
+    width: 250,
     editable: false,
   },
+  {
+    field: "action",
+    headerName: "Edytuj/Usuń",
+    width: 180,
+    sortable: false,
+    renderCell: ({ row }: Partial<GridRowParams>) =>
+      <ButtonGroup variant="contained" aria-label="outlined primary button group">
+        <Button>Edytuj</Button>
+        <Button>Usuń</Button>
+      </ButtonGroup>
+  }
 ];
 
 const createRandomRow = (user: any) => {
