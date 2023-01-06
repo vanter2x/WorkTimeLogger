@@ -1,8 +1,15 @@
 import { Button, Card, CardContent, Grid, MenuItem, TextField, Typography } from '@mui/material'
+import { FormState } from '../../app/layout/Content';
+import { User } from '../../app/models/user';
 
-export default function AddUserForm() {
+interface Props {
+    isNewUser: (formShow: boolean) => void;
+    editUser: User | null;
+    formUserState: FormState;
+}
+
+export default function AddUserForm({ isNewUser, editUser, formUserState }: Props) {
     const roles = [
-
         { id: 1, text: "Admin" },
         { id: 2, text: "Kierownik" },
         { id: 3, text: "Pracownik" }
@@ -13,7 +20,7 @@ export default function AddUserForm() {
             <Card style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
                 <CardContent>
                     <Typography gutterBottom variant="h5">
-                        Nowy użytkownik
+                        {editUser === null ? 'Nowy użytkownik' : 'Edytuj użytkownika'}
                     </Typography>
                     <form>
                         <Grid container spacing={1}>
@@ -52,7 +59,7 @@ export default function AddUserForm() {
                                 <TextField label="Powtórz hasło" type={'password'} placeholder="Podaj hasło" variant="outlined" fullWidth required />
                             </Grid>
                             <Grid item xs={12}>
-                                <Button type="submit" variant="contained" color="primary" fullWidth>Zapisz</Button>
+                                <Button onClick={() => isNewUser(false)} type="submit" variant="contained" color="primary" fullWidth>Zapisz</Button>
                             </Grid>
                         </Grid>
                     </form>

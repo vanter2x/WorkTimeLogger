@@ -9,10 +9,18 @@ interface Props {
   selectedMenuId: number;
 }
 
+export enum FormState {
+  'none' = 0,
+  'create' = 1,
+  'edit',
+  'delete'
+}
+
 export default function Content({ selectedMenuId }: Props) {
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [newUser, setNewUser] = useState(false);
+  const [userFormState, setUserFormState] = useState<FormState>(FormState.none)
 
   const handleUserSetter = (user: User) => {
     setSelectedUser(user);
@@ -22,13 +30,15 @@ export default function Content({ selectedMenuId }: Props) {
     setNewUser(isNewUser);
   }
 
+  const handleUserFormState = (state: FormState) => {
+    setUserFormState(state);
+  }
+
   return (
     <Paper sx={{ maxWidth: 1002, margin: 'auto', overflow: 'auto' }}>
-      <ContentAppBar selectedId={selectedMenuId} userSelect={selectedUser} newUserHandler={handleNewUser} />
-      {newUser ? <AddUserForm />
-        :
-        <ContentList listId={selectedMenuId} userHandler={handleUserSetter} />
-      }
+      <ContentAppBar selectedId={selectedMenuId} userSelect={selectedUser} newUserHandler={handleNewUser} userFormStateHandler={handleUserFormState} />
+      {newUser ? <AddUserForm isNewUser={handleNewUser} editUser={selectedUser} formUserState={userFormState} />
+        : <ContentList listId={selectedMenuId} userHandler={handleUserSetter} />}
     </Paper>
   );
 }
