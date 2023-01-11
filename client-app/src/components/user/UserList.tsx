@@ -1,27 +1,34 @@
 import { Button, ButtonGroup } from "@mui/material";
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridRowParams, GridRowsProp } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import requestAgent from "../../app/api/requestAgent";
 import { User } from "../../app/models/user";
 import LoadingComponent from "../shared/LoadingConponent";
+import AddUserForm from "./AddUserForm";
 
 const columns: GridColDef[] = [
   {
     field: "firstName",
     headerName: "Imię",
+    align: 'center',
+    headerAlign: 'center',
     width: 150,
     editable: false,
   },
   {
     field: "lastName",
     headerName: "Nazwisko",
+    align: 'center',
+    headerAlign: 'center',
     width: 150,
     editable: false,
   },
   {
     field: "phoneNumber",
     headerName: "Telefon",
+    align: 'center',
+    headerAlign: 'center',
     width: 110,
     editable: false,
   },
@@ -29,23 +36,33 @@ const columns: GridColDef[] = [
     field: "email",
     headerName: "Email",
     sortable: false,
+    headerAlign: 'center',
     width: 250,
+    align: 'center',
     editable: false,
   },
   {
     field: "action",
     headerName: "Edytuj/Usuń",
     width: 180,
+    headerAlign: 'center',
     sortable: false,
-    renderCell: ({ row }: Partial<GridRowParams>) =>
+    align: 'center',
+    renderCell: () =>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
-        <Button>Edytuj</Button>
+        <Button>Edytuj{selectedUser?.firstName}</Button>
         <Button>Usuń</Button>
       </ButtonGroup>
   }
 ];
 
-const createRandomRow = (user: any) => {
+let selectedUser: User | null = null;
+
+const setUser = (user: User | null) => {
+  selectedUser = user;
+}
+
+const createRandomRow = (user: User) => {
   return {
     id: user.id,
     firstName: user.firstName,
@@ -55,14 +72,11 @@ const createRandomRow = (user: any) => {
   };
 };
 
-interface Props {
-  selectedUser: (user: User) => void;
-}
-
-export default function UserList({ selectedUser }: Props) {
+export default function UserList() {
   const [rows, setRows] = useState<GridRowsProp>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
 
   useEffect(() => {
@@ -87,14 +101,15 @@ export default function UserList({ selectedUser }: Props) {
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
+        disableVirtualization
         experimentalFeatures={{ newEditingApi: true }}
         onSelectionModelChange={(ids) => {
           const selectedIDs = new Set(ids);
           const userSelect = users.filter((user) =>
             selectedIDs.has(user.id)
           );
-
-          selectedUser(userSelect[0]);
+          setSelectedUser(userSelect[0]);
+          setUser(selectedUser);
           console.log(userSelect[0]); //do usunięcia!!!!!!!!!!!!!!!!!!!!!!!!
         }}
       />

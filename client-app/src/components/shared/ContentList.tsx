@@ -1,18 +1,16 @@
-import { User } from "../../app/models/user";
 import ClientList from "../client/ClientList";
 import UserList from "../user/UserList";
 
 
 interface Props {
     listId: number
-    userHandler: (user: User) => void;
 }
 
-export default function ContentList({ listId, userHandler }: Props) {
+export default function ContentList({ listId }: Props) {
     switch (listId) {
         case 0:
             return (
-                <UserList selectedUser={userHandler} />
+                <UserList />
             )
         case 1:
             return (
