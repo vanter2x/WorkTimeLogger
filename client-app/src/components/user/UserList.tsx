@@ -56,12 +56,6 @@ const columns: GridColDef[] = [
   }
 ];
 
-const ss = () => {
-  return (
-    <AddUserForm />
-  )
-}
-
 let selectedUser: User | null = null;
 
 const setUser = (user: User | null) => {
