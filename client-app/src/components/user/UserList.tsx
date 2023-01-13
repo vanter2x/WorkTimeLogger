@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import requestAgent from "../../app/api/requestAgent";
 import { User } from "../../app/models/user";
 import LoadingComponent from "../shared/LoadingConponent";
-import AddUserForm from "./AddUserForm";
 
 const columns: GridColDef[] = [
   {
@@ -50,11 +49,27 @@ const columns: GridColDef[] = [
     align: 'center',
     renderCell: () =>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
-        <Button>Edytuj{selectedUser?.firstName}</Button>
-        <Button>Usuń</Button>
+        <Button id='edit'>Edytuj{selectedUser?.firstName}</Button>
+        <Button id='delete'>Usuń</Button>
       </ButtonGroup>
   }
 ];
+
+// const buttonColumn = (ss:any) => {
+//   return({
+//     field: "action",
+//     headerName: "Edytuj/Usuń",
+//     width: 180,
+//     headerAlign: 'center',
+//     sortable: false,
+//     align: 'center',
+//     renderCell: () =>
+//       <ButtonGroup variant="contained" aria-label="outlined primary button group">
+//         <Button id='edit' onClick={ss}>Edytuj{selectedUser?.firstName}</Button>
+//         <Button id='delete'>Usuń</Button>
+//       </ButtonGroup>
+//   })
+// }
 
 let selectedUser: User | null = null;
 
@@ -72,12 +87,16 @@ const createRandomRow = (user: User) => {
   };
 };
 
-export default function UserList() {
-  const [rows, setRows] = useState<GridRowsProp>([]);
+interface Props {
+  setUserToEdit: (user: User | null) => void;
+}
+
+export default function UserList({ setUserToEdit }: Props) {
+
+  let [rows, setRows] = useState<GridRowsProp>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-
+  const [euser, setEuser] = useState<User | null>(null);
 
   useEffect(() => {
     requestAgent.Users.list()
@@ -103,14 +122,16 @@ export default function UserList() {
         rowsPerPageOptions={[5]}
         disableVirtualization
         experimentalFeatures={{ newEditingApi: true }}
-        onSelectionModelChange={(ids) => {
-          const selectedIDs = new Set(ids);
-          const userSelect = users.filter((user) =>
-            selectedIDs.has(user.id)
-          );
-          setSelectedUser(userSelect[0]);
-          setUser(selectedUser);
-          console.log(userSelect[0]); //do usunięcia!!!!!!!!!!!!!!!!!!!!!!!!
+        onRowClick={(row) => {
+          const selectedId = row.id;
+          let userSelect: User | null | undefined = users.find((user) => user.id === selectedId)
+          if (userSelect === undefined) userSelect = null;
+          setUser(userSelect);
+          setEuser(userSelect);
+          setUserToEdit(userSelect);
+        }}
+        onRowDoubleClick={() => {
+          setUserToEdit(euser);
         }}
       />
     </Box>

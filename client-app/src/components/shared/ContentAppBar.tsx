@@ -2,22 +2,18 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { FormState } from '../../app/layout/Content';
+import { FormContentState } from '../../app/layout/Content';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 interface Props {
-    selectedId: number
-    newUserHandler: (isNewUser: boolean) => void;
-    userFormStateHandler: (formState: FormState) => void;
+    selectedId: number;
+    userFormStateHandler: (formState: FormContentState) => void;
 }
 
+export default function ContentAppBar({ selectedId, userFormStateHandler }: Props) {
 
-
-export default function ContentAppBar({ selectedId, newUserHandler, userFormStateHandler }: Props) {
-
-    const formStateChange = (newUser: boolean, formState: FormState) => {
-        newUserHandler(newUser);
+    const formStateChange = (formState: FormContentState) => {
         userFormStateHandler(formState);
     }
 
@@ -34,7 +30,7 @@ export default function ContentAppBar({ selectedId, newUserHandler, userFormStat
                     </Grid>
                     <Grid item >
                         <Button
-                            onClick={() => formStateChange(true, FormState.create)}
+                            onClick={() => formStateChange(FormContentState.edit)}
                             id="adduser"
                             sx={{ borderColor: lightColor }}
                             variant="outlined"

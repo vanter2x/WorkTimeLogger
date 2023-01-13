@@ -2,36 +2,41 @@ import Paper from '@mui/material/Paper';
 import ContentList from '../../components/shared/ContentList';
 import ContentAppBar from '../../components/shared/ContentAppBar';
 import { useState } from 'react';
-import AddUserForm from '../../components/user/AddUserForm';
+import { User } from '../models/user';
 
 interface Props {
   selectedMenuId: number;
 }
 
-export enum FormState {
-  'none' = 0,
-  'create' = 1,
-  'edit',
-  'delete'
+export const enum FormContentState {
+  list = 0,
+  new,
+  edit
+}
+
+export const enum FormState {
+  create = 1,
+  edit
 }
 
 export default function Content({ selectedMenuId }: Props) {
-  const [newUser, setNewUser] = useState(false);
-  const [userFormState, setUserFormState] = useState<FormState>(FormState.none)
 
-  const handleNewUser = (isNewUser: boolean) => {
-    setNewUser(isNewUser);
+  const [formState, setFormState] = useState<FormContentState>(FormContentState.list)
+  const [editableUser, setEditableUser] = useState<User | null>(null);
+
+  const handleContentState = (state: FormContentState) => {
+    setFormState(state);
   }
 
-  const handleUserFormState = (state: FormState) => {
-    setUserFormState(state);
+  const handleEditableUser = (user: User | null) => {
+    setEditableUser(user);
   }
+
   //rozwiązać sprawę edycji i nowego użytkownika
   return (
     <Paper sx={{ maxWidth: 1002, margin: 'auto', overflow: 'auto' }}>
-      <ContentAppBar selectedId={selectedMenuId} newUserHandler={handleNewUser} userFormStateHandler={handleUserFormState} />
-      {newUser ? <AddUserForm isNewUser={handleNewUser} editUser={null} formUserState={userFormState} />
-        : <ContentList listId={selectedMenuId} />}
+      <ContentAppBar selectedId={selectedMenuId} userFormStateHandler={handleContentState} />
+      <ContentList formContateState={formState} userToEdit={editableUser} listId={selectedMenuId} userToEditHandler={handleEditableUser} />
     </Paper>
   );
 }
