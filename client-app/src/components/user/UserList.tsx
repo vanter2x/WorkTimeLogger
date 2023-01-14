@@ -1,13 +1,13 @@
 import { Button, ButtonGroup } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import requestAgent from "../../app/api/requestAgent";
+import { FormContentState } from "../../app/layout/Content";
 import { User } from "../../app/models/user";
 import LoadingComponent from "../shared/LoadingConponent";
-import AddUserForm from "./AddUserForm";
 
-const columns: GridColDef[] = [
+let columns: GridColDef[] = [
   {
     field: "firstName",
     headerName: "Imię",
@@ -40,8 +40,11 @@ const columns: GridColDef[] = [
     width: 250,
     align: 'center',
     editable: false,
-  },
-  {
+  }
+];
+
+let column: any = (editCall: MouseEventHandler<HTMLButtonElement>, deleteCall: MouseEventHandler<HTMLButtonElement>) => {
+  return ({
     field: "action",
     headerName: "Edytuj/Usuń",
     width: 180,
@@ -50,16 +53,10 @@ const columns: GridColDef[] = [
     align: 'center',
     renderCell: () =>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
-        <Button>Edytuj{selectedUser?.firstName}</Button>
-        <Button>Usuń</Button>
+        <Button onClick={editCall} id='edit'>Edytuj</Button>
+        <Button onClick={deleteCall} id='delete'>Usuń</Button>
       </ButtonGroup>
-  }
-];
-
-let selectedUser: User | null = null;
-
-const setUser = (user: User | null) => {
-  selectedUser = user;
+  })
 }
 
 const createRandomRow = (user: User) => {
@@ -72,12 +69,16 @@ const createRandomRow = (user: User) => {
   };
 };
 
-export default function UserList() {
-  const [rows, setRows] = useState<GridRowsProp>([]);
+interface Props {
+  setUserToEdit: (user: User | null) => void;
+  contentFormState: (state: FormContentState) => void;
+}
+
+export default function UserList({ setUserToEdit, contentFormState }: Props) {
+
+  let [rows, setRows] = useState<GridRowsProp>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-
 
   useEffect(() => {
     requestAgent.Users.list()
@@ -92,25 +93,24 @@ export default function UserList() {
     users.map((user) => setRows((rows) => [...rows, createRandomRow(user)]));
   }, [users])
 
-  if (loading) return <LoadingComponent />
+  let col = column(() => { contentFormState(FormContentState.edit) },
+    () => console.log('d'));
 
+  if (loading) return <LoadingComponent />
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       <DataGrid
         rows={rows}
-        columns={columns}
+        columns={[...columns, col]}
         pageSize={5}
         rowsPerPageOptions={[5]}
         disableVirtualization
         experimentalFeatures={{ newEditingApi: true }}
-        onSelectionModelChange={(ids) => {
-          const selectedIDs = new Set(ids);
-          const userSelect = users.filter((user) =>
-            selectedIDs.has(user.id)
-          );
-          setSelectedUser(userSelect[0]);
-          setUser(selectedUser);
-          console.log(userSelect[0]); //do usunięcia!!!!!!!!!!!!!!!!!!!!!!!!
+        onRowClick={(row) => {
+          const selectedId = row.id;
+          let userSelect: User | null | undefined = users.find((user) => user.id === selectedId)
+          if (userSelect === undefined) userSelect = null;
+          setUserToEdit(userSelect);
         }}
       />
     </Box>
