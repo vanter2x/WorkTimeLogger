@@ -1,13 +1,14 @@
 import { Button, Card, CardContent, Grid, MenuItem, TextField, Typography } from '@mui/material'
-import { FormState } from '../../app/layout/Content';
+import { FormContentState, FormState } from '../../app/layout/Content';
 import { User } from '../../app/models/user';
 
 interface Props {
     editUser: User | null;
     formUserState: FormState;
+    contentFormState: (state: FormContentState) => void;
 }
 
-export default function UserForm({ editUser, formUserState }: Props) {
+export default function UserForm({ editUser, formUserState, contentFormState }: Props) {
     const roles = [
         { id: 1, text: "Admin" },
         { id: 2, text: "Kierownik" },
@@ -65,7 +66,7 @@ export default function UserForm({ editUser, formUserState }: Props) {
                                 <Button type="submit" variant="contained" color="primary" fullWidth>Zapisz</Button>
                             </Grid>
                             <Grid item xs={12}>
-                                <Button variant="outlined" color="primary" >Anuluj</Button>
+                                <Button onClick={() => contentFormState(FormContentState.list)} variant="outlined" color="primary" >Anuluj</Button>
                             </Grid>
                         </Grid>
                     </form>

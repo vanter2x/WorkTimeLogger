@@ -1,26 +1,35 @@
+import { useState } from "react";
 import { FormContentState } from "../../app/layout/Content";
-import { User } from "../../app/models/user";
 import ClientList from "../client/ClientList";
 import UserContent from "../user/UserContent";
-
+import ContentAppBar from "./ContentAppBar";
 
 interface Props {
-    listId: number
-    formContateState: FormContentState
-    userToEdit: User | null;
-    userToEditHandler: (user: User | null) => void;
-
+    listId: number;
 }
 
-export default function ContentList({ listId, formContateState, userToEdit, userToEditHandler }: Props) {
+export default function ContentList({ listId }: Props) {
+
+    const [formState, setFormState] = useState<FormContentState>(FormContentState.list)
+
+    const handleContentState = (state: FormContentState) => {
+        setFormState(state);
+    }
+
     switch (listId) {
         case 0:
             return (
-                <UserContent contentState={formContateState} editableUser={userToEdit} setEditableUser={userToEditHandler} />
+                <>
+                    <ContentAppBar selectedId={listId} userFormStateHandler={handleContentState} />
+                    <UserContent contentState={formState} contentFormStateHandler={handleContentState} />
+                </>
             )
         case 1:
             return (
-                <ClientList />
+                <>
+                    <ContentAppBar selectedId={listId} userFormStateHandler={handleContentState} />
+                    <ClientList />
+                </>
             )
         default:
             return (
