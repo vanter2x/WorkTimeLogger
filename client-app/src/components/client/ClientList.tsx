@@ -1,8 +1,9 @@
 import { Button, ButtonGroup } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef, GridRowParams, GridRowsProp } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import requestAgent from "../../app/api/requestAgent";
+import { FormContentState } from "../../app/layout/Content";
 import { Client } from "../../app/models/client";
 import LoadingComponent from "../shared/LoadingConponent";
 
@@ -32,18 +33,23 @@ const columns: GridColDef[] = [
         width: 250,
         editable: false,
     },
-    {
+];
+
+let column: any = (editCall: MouseEventHandler<HTMLButtonElement>, deleteCall: MouseEventHandler<HTMLButtonElement>) => {
+    return ({
         field: "action",
         headerName: "Edytuj/Usuń",
         width: 180,
+        headerAlign: 'center',
         sortable: false,
-        renderCell: ({ row }: Partial<GridRowParams>) =>
+        align: 'center',
+        renderCell: () =>
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                <Button>Edytuj</Button>
-                <Button>Usuń</Button>
+                <Button onClick={editCall} id='edit'>Edytuj</Button>
+                <Button onClick={deleteCall} id='delete'>Usuń</Button>
             </ButtonGroup>
-    }
-];
+    })
+}
 
 const createRandomRow = (client: any) => {
     return {
@@ -55,11 +61,15 @@ const createRandomRow = (client: any) => {
     };
 };
 
-export default function ClientList() {
-    const [clients, setClients] = useState<Client[]>([]);
+interface Props {
+    setClientToEdit: (user: Client | null) => void;
+    contentFormState: (state: FormContentState) => void;
+}
+
+export default function ClientList({ setClientToEdit, contentFormState }: Props) {
     const [rows, setRows] = useState<GridRowsProp>([]);
+    const [clients, setClients] = useState<Client[]>([]);
     const [loading, setLoading] = useState(true);
-    const [selectedRows, setSelectedRows] = useState<any>(null);
 
     useEffect(() => {
         requestAgent.Clients.list()
@@ -74,6 +84,9 @@ export default function ClientList() {
         clients.map((client) => setRows((rows) => [...rows, createRandomRow(client)]));
     }, [clients])
 
+    let buttonsColumn = column(() => { contentFormState(FormContentState.edit) },
+        () => console.log('d'));
+
     if (loading) {
         return (
             <Box sx={{ height: 400, width: "100%" }}>
@@ -86,17 +99,15 @@ export default function ClientList() {
         <Box sx={{ height: 400, width: "100%" }}>
             <DataGrid
                 rows={rows}
-                columns={columns}
+                columns={[...columns, buttonsColumn]}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 experimentalFeatures={{ newEditingApi: true }}
-                onSelectionModelChange={(ids) => {
-                    const selectedIDs = new Set(ids);
-                    const selectedRow = rows.filter((row) =>
-                        selectedIDs.has(row.id),
-                    );
-                    setSelectedRows(selectedRow);
-                    console.log(selectedRows);
+                onRowClick={(row) => {
+                    const selectedId = row.id;
+                    let clientSelect: Client | null | undefined = clients.find((client) => client.id === selectedId)
+                    if (clientSelect === undefined) clientSelect = null;
+                    setClientToEdit(clientSelect);
                 }}
             />
         </Box>
