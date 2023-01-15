@@ -1,6 +1,7 @@
 import { Button, ButtonGroup } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { MouseEventHandler } from "react";
+import { Client } from "../../app/models/client";
 import { User } from "../../app/models/user";
 
 const columns: GridColDef[] = [
@@ -57,12 +58,12 @@ export const makeButtonColumn: any = (editCall: MouseEventHandler<HTMLButtonElem
   })
 }
 
-export const createRandomRow = (user: User) => {
+export const createRandomRow = (entity: User | Client) => {
   return {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    phoneNumber: user.phone,
-    email: user.email,
+    id: entity.id,
+    firstName: entity.firstName,
+    lastName: entity.lastName,
+    phoneNumber: entity.phone,
+    email: entity.email,
   };
 };

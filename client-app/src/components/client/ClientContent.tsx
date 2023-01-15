@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { FormState, FormContentState } from '../../app/layout/Content';
 import { Client } from '../../app/models/client';
-import { User } from '../../app/models/user';
 import ContentAppBar from '../shared/ContentAppBar';
 import ClientForm from './ClientForm';
 import ClientList from './ClientList';

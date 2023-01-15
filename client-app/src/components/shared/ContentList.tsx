@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { FormContentState } from "../../app/layout/Content";
 import ClientContent from "../client/ClientContent";
-import ClientList from "../client/ClientList";
 import UserContent from "../user/UserContent";
-import ContentAppBar from "./ContentAppBar";
 
 interface Props {
     listId: number;
