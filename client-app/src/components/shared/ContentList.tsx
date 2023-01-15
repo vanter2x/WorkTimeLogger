@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { FormContentState } from "../../app/layout/Content";
-import ClientList from "../client/ClientList";
+import ClientContent from "../client/ClientContent";
 import UserContent from "../user/UserContent";
-import ContentAppBar from "./ContentAppBar";
 
 interface Props {
     listId: number;
@@ -20,15 +19,13 @@ export default function ContentList({ listId }: Props) {
         case 0:
             return (
                 <>
-                    <ContentAppBar selectedId={listId} userFormStateHandler={handleContentState} />
-                    <UserContent contentState={formState} contentFormStateHandler={handleContentState} />
+                    <UserContent contentState={formState} contentFormStateHandler={handleContentState} selectedMenuId={listId} />
                 </>
             )
         case 1:
             return (
                 <>
-                    <ContentAppBar selectedId={listId} userFormStateHandler={handleContentState} />
-                    <ClientList />
+                    <ClientContent contentState={formState} contentFormStateHandler={handleContentState} selectedMenuId={listId} />
                 </>
             )
         default:

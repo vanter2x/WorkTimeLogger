@@ -13,10 +13,6 @@ interface Props {
 
 export default function ContentAppBar({ selectedId, userFormStateHandler }: Props) {
 
-    const formStateChange = (formState: FormContentState) => {
-        userFormStateHandler(formState);
-    }
-
     return (
         <AppBar
             position="static"
@@ -30,7 +26,7 @@ export default function ContentAppBar({ selectedId, userFormStateHandler }: Prop
                     </Grid>
                     <Grid item >
                         <Button
-                            onClick={() => formStateChange(FormContentState.edit)}
+                            onClick={() => userFormStateHandler(FormContentState.new)}
                             id="adduser"
                             sx={{ borderColor: lightColor }}
                             variant="outlined"

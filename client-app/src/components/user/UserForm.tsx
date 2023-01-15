@@ -47,7 +47,7 @@ export default function UserForm({ editUser, formUserState, contentFormState }: 
                                     required
                                     fullWidth
                                     label="Typ konta"
-                                    defaultValue={formUserState === FormState.edit ? roles.filter(role => role.id === editUser?.roleId) : 'Pracownik'}
+                                    defaultValue={formUserState === FormState.edit ? roles.filter(role => role.id === editUser?.roleId)[0].text : 'Pracownik'}
                                 >
                                     {roles.map((option) => (
                                         <MenuItem key={option.id} value={option.text}>
