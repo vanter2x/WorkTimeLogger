@@ -1,4 +1,5 @@
 import { Button, Card, CardContent, Grid, MenuItem, TextField, Typography } from '@mui/material'
+import { useState } from 'react';
 import { FormContentState, FormState } from '../../app/layout/Content';
 import { User } from '../../app/models/user';
 
@@ -14,6 +15,17 @@ export default function UserForm({ editUser, formUserState, contentFormState }: 
         { id: 2, text: "Kierownik" },
         { id: 3, text: "Pracownik" }
     ]
+
+    const initialState = editUser ?? {
+        id: '',
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        roleId: 3
+
+    };
+    const [user, setUser] = useState(initialState)
 
     return (
         <Grid>

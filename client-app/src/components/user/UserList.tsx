@@ -1,30 +1,19 @@
 import Box from "@mui/material/Box";
 import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import requestAgent from "../../app/api/requestAgent";
 import { FormContentState } from "../../app/layout/Content";
 import { User } from "../../app/models/user";
 import { createRandomRow, getColumns, makeButtonColumn } from "../shared/columnSettings";
-import LoadingComponent from "../shared/LoadingConponent";
 
 interface Props {
   setUserToEdit: (user: User | null) => void;
   contentFormState: (state: FormContentState) => void;
+  users: User[];
 }
 
-export default function UserList({ setUserToEdit, contentFormState }: Props) {
+export default function UserList({ users, setUserToEdit, contentFormState }: Props) {
 
   const [rows, setRows] = useState<GridRowsProp>([]);
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    requestAgent.Users.list()
-      .then((response) => {
-        setUsers(response);
-        setLoading(false);
-      })
-  }, []);
 
   useEffect(() => {
     setRows([]);
@@ -35,8 +24,7 @@ export default function UserList({ setUserToEdit, contentFormState }: Props) {
 
   let buttonsColumn = makeButtonColumn(() => { contentFormState(FormContentState.edit) },
     () => console.log('d'));
-
-  if (loading) return <LoadingComponent />
+    
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       <DataGrid

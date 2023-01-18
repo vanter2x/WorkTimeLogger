@@ -15,11 +15,11 @@ export default function ClientContent({ contentState, contentFormStateHandler, s
 
     const [editableClient, setEditableClient] = useState<Client | null>(null);
 
-    const handleEditableClient = (client: Client | null) => {
+    function handleEditableClient(client: Client | null) {
         setEditableClient(client);
     }
 
-    const renderClientContent = () => {
+    function renderClientContent() {
         switch (contentState) {
 
             case FormContentState.list:
