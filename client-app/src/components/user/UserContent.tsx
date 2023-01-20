@@ -54,17 +54,17 @@ export default function UserContent({ contentState, contentFormStateHandler, sel
 
             case FormContentState.list:
                 return (
-                    <UserList users={users} setUserToEdit={handleEditableUser} contentFormState={contentFormStateHandler} userHandler={handleCreateOrEditUser} />
+                    <UserList users={users} setUserToEdit={handleEditableUser} contentFormState={contentFormStateHandler} />
                 );
 
             case FormContentState.new:
                 return (
-                    <UserForm editUser={null} formUserState={FormState.create} contentFormState={contentFormStateHandler} />
+                    <UserForm userHandler={handleCreateOrEditUser} editUser={null} formUserState={FormState.create} contentFormState={contentFormStateHandler} />
                 );
 
             case FormContentState.edit:
                 return (
-                    <UserForm editUser={editableUser} formUserState={FormState.edit} contentFormState={contentFormStateHandler} />
+                    <UserForm userHandler={handleCreateOrEditUser} editUser={editableUser} formUserState={FormState.edit} contentFormState={contentFormStateHandler} />
                 );
 
             default:
@@ -75,7 +75,7 @@ export default function UserContent({ contentState, contentFormStateHandler, sel
     return (
         <>
             <ContentAppBar selectedId={selectedMenuId} userFormStateHandler={contentFormStateHandler} />
-            {renderUserContent()};
+            {renderUserContent()}
         </>
     )
 

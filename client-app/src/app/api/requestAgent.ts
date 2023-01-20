@@ -8,7 +8,7 @@ const waiting = (delay : number) => {
     })
 }
 
-axios.defaults.baseURL = "https://localhost:7156/api";
+axios.defaults.baseURL = "https://localhost:7156/api/";
 
 axios.interceptors.response.use(async response => {
     try {
@@ -32,8 +32,8 @@ const requests = {
 const Users = {
     list: () => requests.get<User[]>('/user'),
     details: (id: string) => requests.get<User>(`/user/${id}`),
-    create: (user: User) => requests.post<void>('/user',user),
-    update: (user: User) => requests.put<void>('/user', user),
+    create: (user: User) => requests.post<void>('/user/',user),
+    update: (user: User) => requests.put<void>(`/user/${user.id}`, user),
     delete: (id: string) => requests.del<void>(`/user/${id}`)
 }
 const Clients = {

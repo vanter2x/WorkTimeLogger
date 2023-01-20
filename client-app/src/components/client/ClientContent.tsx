@@ -45,7 +45,7 @@ export default function ClientContent({ contentState, contentFormStateHandler, s
     return (
         <>
             <ContentAppBar selectedId={selectedMenuId} userFormStateHandler={contentFormStateHandler} />
-            {renderClientContent()};
+            {renderClientContent()}
         </>
     )
 

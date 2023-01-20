@@ -22,5 +22,5 @@ export default function Content({ selectedMenuId }: Props) {
     <Paper sx={{ maxWidth: 1002, margin: 'auto', overflow: 'auto' }}>
       <ContentList listId={selectedMenuId} />
     </Paper>
-  );
+  )
 }
