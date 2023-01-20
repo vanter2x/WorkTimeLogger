@@ -17,9 +17,10 @@ export const enum FormState {
 }
 
 export default function Content({ selectedMenuId }: Props) {
+
   return (
     <Paper sx={{ maxWidth: 1002, margin: 'auto', overflow: 'auto' }}>
       <ContentList listId={selectedMenuId} />
     </Paper>
-  );
+  )
 }

@@ -172,11 +172,11 @@ export default function Paperbase() {
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const [selectedId, setSelectedId] = React.useState<number>(0);
 
-  const handleDrawerToggle = () => {
+  function handleDrawerToggle() {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleSelectedId = (nr: number) => {
+  function handleSelectedId(nr: number) {
     setSelectedId(nr);
   };
 
