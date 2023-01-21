@@ -1,4 +1,5 @@
 import { LocalActivity } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import { Button, Card, CardContent, Grid, MenuItem, TextField, Typography } from '@mui/material'
 import { useGridApiEventHandler } from '@mui/x-data-grid';
 import { ChangeEvent, useState } from 'react';
@@ -10,9 +11,10 @@ interface Props {
     formUserState: FormState;
     contentFormState: (state: FormContentState) => void;
     userHandler: (user: User) => void;
+    submitting: boolean;
 }
 
-export default function UserForm({ editUser, formUserState, contentFormState, userHandler }: Props) {
+export default function UserForm({ editUser, formUserState, contentFormState, userHandler, submitting }: Props) {
     const roles = [
         { id: 1, text: "Admin" },
         { id: 2, text: "Kierownik" },
@@ -31,7 +33,6 @@ export default function UserForm({ editUser, formUserState, contentFormState, us
     const [user, setUser] = useState(initialState)
 
     function handleSubmit() {
-        console.log(user);
         userHandler(user);
     }
 
@@ -95,7 +96,7 @@ export default function UserForm({ editUser, formUserState, contentFormState, us
                                 <TextField label="Powtórz hasło" type={'password'} placeholder="Podaj hasło" variant="outlined" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
-                                <Button type="submit" variant="contained" color="primary" fullWidth>Zapisz</Button>
+                                <LoadingButton loading={submitting} type="submit" variant="contained" color="primary" fullWidth>Zapisz</LoadingButton>
                             </Grid>
                             <Grid item xs={12}>
                                 <Button onClick={() => contentFormState(FormContentState.list)} variant="outlined" color="primary" >Anuluj</Button>
