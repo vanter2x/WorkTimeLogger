@@ -1,4 +1,3 @@
-import { Agent } from 'https';
 import { useEffect, useState } from 'react';
 import requestAgent from '../../app/api/requestAgent';
 import { FormState, FormContentState } from '../../app/layout/Content';
@@ -19,7 +18,6 @@ export default function UserContent({ contentState, contentFormStateHandler, sel
     const [editableUser, setEditableUser] = useState<User | null>(null);
     const [users, setUsers] = useState<User[]>([]);
     const [submitting, setSubmitting] = useState(false);
-
 
     useEffect(() => {
         requestAgent.Users.list()
@@ -48,23 +46,31 @@ export default function UserContent({ contentState, contentFormStateHandler, sel
         }
     }
 
+    function handleDeleteUser(id: string) {
+        setSubmitting(true);
+        requestAgent.Users.delete(id).then(() => {
+            setUsers([...users.filter(user => user.id !== id)])
+            setEditableUser(null);
+            setSubmitting(false);
+        })
+    }
 
     const renderUserContent = () => {
         switch (contentState) {
 
             case FormContentState.list:
                 return (
-                    <UserList users={users} setUserToEdit={handleEditableUser} contentFormState={contentFormStateHandler} />
+                    <UserList userDeleteHandler={handleDeleteUser} users={users} setUserToEdit={handleEditableUser} contentFormState={contentFormStateHandler} />
                 );
 
             case FormContentState.new:
                 return (
-                    <UserForm userHandler={handleCreateOrEditUser} editUser={null} formUserState={FormState.create} contentFormState={contentFormStateHandler} />
+                    <UserForm submitting={submitting} userHandler={handleCreateOrEditUser} editUser={null} formUserState={FormState.create} contentFormState={contentFormStateHandler} />
                 );
 
             case FormContentState.edit:
                 return (
-                    <UserForm userHandler={handleCreateOrEditUser} editUser={editableUser} formUserState={FormState.edit} contentFormState={contentFormStateHandler} />
+                    <UserForm submitting={submitting} userHandler={handleCreateOrEditUser} editUser={editableUser} formUserState={FormState.edit} contentFormState={contentFormStateHandler} />
                 );
 
             default:
@@ -78,9 +84,4 @@ export default function UserContent({ contentState, contentFormStateHandler, sel
             {renderUserContent()}
         </>
     )
-
-}
-
-function setLoading(arg0: boolean) {
-    throw new Error('Function not implemented.');
 }

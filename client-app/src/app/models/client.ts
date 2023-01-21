@@ -1,9 +1,8 @@
 export interface Client{
-    id: string;
+    id: number;
     firstName: string;
     lastName: string;
     phone: string;
     email: string;
-    workPlace: any;
 }
 export{}

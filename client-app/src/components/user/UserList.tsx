@@ -9,11 +9,13 @@ interface Props {
   setUserToEdit: (user: User | null) => void;
   contentFormState: (state: FormContentState) => void;
   users: User[];
+  userDeleteHandler: (id: string) => void;
 }
 
-export default function UserList({ users, setUserToEdit, contentFormState }: Props) {
+export default function UserList({ users, setUserToEdit, contentFormState, userDeleteHandler }: Props) {
 
   const [rows, setRows] = useState<GridRowsProp>([]);
+  const [user, setUser] = useState<User | null>();
 
   useEffect(() => {
     setRows([]);
@@ -23,8 +25,8 @@ export default function UserList({ users, setUserToEdit, contentFormState }: Pro
   var columns = getColumns();
 
   let buttonsColumn = makeButtonColumn(() => { contentFormState(FormContentState.edit) },
-    () => console.log('d'));
-    
+    () => userDeleteHandler(user?.id as string));
+
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       <DataGrid
@@ -36,9 +38,12 @@ export default function UserList({ users, setUserToEdit, contentFormState }: Pro
         experimentalFeatures={{ newEditingApi: true }}
         onRowClick={(row) => {
           const selectedId = row.id;
-          let userSelect: User | null | undefined = users.find((user) => user.id === selectedId)
+          let userSelect: User | null = users.filter((user) => user.id === selectedId)[0];
           if (userSelect === undefined) userSelect = null;
           setUserToEdit(userSelect);
+          setUser(userSelect)
+          buttonsColumn = makeButtonColumn(() => { contentFormState(FormContentState.edit) },
+            () => userDeleteHandler(user?.id as string));
         }}
       />
     </Box>
