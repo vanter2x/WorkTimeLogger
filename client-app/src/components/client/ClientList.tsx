@@ -1,30 +1,21 @@
 import Box from "@mui/material/Box";
 import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import requestAgent from "../../app/api/requestAgent";
 import { FormContentState } from "../../app/layout/Content";
 import { Client } from "../../app/models/client";
 import { createRandomRow, getColumns, makeButtonColumn } from "../shared/columnSettings";
-import LoadingComponent from "../shared/LoadingConponent";
 
 
 interface Props {
     setClientToEdit: (user: Client | null) => void;
     contentFormState: (state: FormContentState) => void;
+    clientDeleteHandler: (id: number) => void;
+    clients: Client[];
 }
 
-export default function ClientList({ setClientToEdit, contentFormState }: Props) {
+export default function ClientList({ setClientToEdit, contentFormState, clientDeleteHandler, clients }: Props) {
     const [rows, setRows] = useState<GridRowsProp>([]);
-    const [clients, setClients] = useState<Client[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        requestAgent.Clients.list()
-            .then((response) => {
-                setClients(response);
-                setLoading(false);
-            })
-    }, []);
+    const [client, setClient] = useState<Client | null>();
 
     useEffect(() => {
         setRows([]);
@@ -34,15 +25,7 @@ export default function ClientList({ setClientToEdit, contentFormState }: Props)
     var columns = getColumns();
 
     let buttonsColumn = makeButtonColumn(() => { contentFormState(FormContentState.edit) },
-        () => console.log('d'));
-
-    if (loading) {
-        return (
-            <Box sx={{ height: 400, width: "100%" }}>
-                <LoadingComponent />
-            </Box>
-        )
-    }
+        () => clientDeleteHandler(client?.id as number));
 
     return (
         <Box sx={{ height: 400, width: "100%" }}>
@@ -54,9 +37,12 @@ export default function ClientList({ setClientToEdit, contentFormState }: Props)
                 experimentalFeatures={{ newEditingApi: true }}
                 onRowClick={(row) => {
                     const selectedId = row.id;
-                    let clientSelect: Client | null | undefined = clients.find((client) => client.id === selectedId)
+                    let clientSelect: Client | null = clients.filter((client) => client.id === selectedId)[0];
                     if (clientSelect === undefined) clientSelect = null;
                     setClientToEdit(clientSelect);
+                    setClient(clientSelect)
+                    buttonsColumn = makeButtonColumn(() => { contentFormState(FormContentState.edit) },
+                        () => clientDeleteHandler(client?.id as number));
                 }}
             />
         </Box>

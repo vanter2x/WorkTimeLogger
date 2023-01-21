@@ -27,7 +27,7 @@ export default function ContentAppBar({ selectedId, userFormStateHandler }: Prop
                     <Grid item >
                         <Button
                             onClick={() => userFormStateHandler(FormContentState.new)}
-                            id="adduser"
+                            id="addNew"
                             sx={{ borderColor: lightColor }}
                             variant="outlined"
                             color="inherit"

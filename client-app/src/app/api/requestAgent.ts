@@ -39,9 +39,9 @@ const Users = {
 const Clients = {
     list: () => requests.get<Client[]>('/client'),
     details: (id: string) => requests.get<Client>(`/client/${id}`),
-    create: (client: Client) => requests.post<void>('/client',client),
-    update: (client: Client) => requests.put<void>('/client', client),
-    delete: (id: string) => requests.del<void>(`/client/${id}`)
+    create: (client: Client) => requests.post<void>('/client/',client),
+    update: (client: Client) => requests.put<void>(`/client/${client.id}`, client),
+    delete: (id: number) => requests.del<void>(`/client/${id}`)
 }
 const requestAgent = {
     Users,

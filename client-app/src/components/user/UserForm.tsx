@@ -26,7 +26,6 @@ export default function UserForm({ editUser, formUserState, contentFormState, us
         phone: '',
         email: '',
         roleId: 3
-
     };
     const [user, setUser] = useState(initialState)
 
