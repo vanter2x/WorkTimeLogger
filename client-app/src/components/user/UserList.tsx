@@ -44,7 +44,6 @@ export default function UserList({ users, setUserToEdit, contentFormState, userD
           setUser(userSelect)
           buttonsColumn = makeButtonColumn(() => { contentFormState(FormContentState.edit) },
             () => userDeleteHandler(user?.id as string));
-
         }}
       />
     </Box>

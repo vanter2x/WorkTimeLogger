@@ -19,7 +19,6 @@ export default function UserContent({ contentState, contentFormStateHandler, sel
     const [users, setUsers] = useState<User[]>([]);
     const [submitting, setSubmitting] = useState(false);
 
-
     useEffect(() => {
         requestAgent.Users.list()
             .then((response) => {
@@ -49,14 +48,12 @@ export default function UserContent({ contentState, contentFormStateHandler, sel
 
     function handleDeleteUser(id: string) {
         setSubmitting(true);
-        console.log(id);
         requestAgent.Users.delete(id).then(() => {
             setUsers([...users.filter(user => user.id !== id)])
             setEditableUser(null);
             setSubmitting(false);
         })
     }
-
 
     const renderUserContent = () => {
         switch (contentState) {
@@ -87,9 +84,4 @@ export default function UserContent({ contentState, contentFormStateHandler, sel
             {renderUserContent()}
         </>
     )
-
-}
-
-function setLoading(arg0: boolean) {
-    throw new Error('Function not implemented.');
 }
